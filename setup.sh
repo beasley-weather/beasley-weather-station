@@ -8,7 +8,7 @@
 USER=badger
 USER_HOME_DIR=/home/$USER
 USER_BEASLEY_DIR=$USER_HOME_DIR/beasley-weather-station/
-BBG_SCRIPTS_DIR=$USER_BEASLEY_DIR/bbg/acu/scripts
+BBG_SCRIPTS_DIR=$USER_BEASLEY_DIR/bbg/scripts
 SERVER_SCRIPTS_DIR=$USER_BEASLEY_DIR/server/scripts
 BBG_SETUP_SCRIPT=setupBBG.sh
 SERVER_SETUP_SCRIPT=setupServer.sh
@@ -52,6 +52,10 @@ done
 
 echo -e "\nRecursively change all file permissions to \"$USER\"..."
 sudo chown -R $USER:$USER $USER_HOME_DIR
+
+echo -e "\nMake sure user [" $USER "] is able to ssh into this system..."
+# https://askubuntu.com/questions/16650/create-a-new-ssh-user-on-ubuntu-server
+sudo sh -c 'echo "AllowUsers " $USER >> /etc/ssh/sshd_config'
 
 echo -e "\nCheck hardware architecture to see if I am running on a BeagleBoneGreen or server..."
 #if [ `arch` == "armhf" ]
