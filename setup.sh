@@ -37,6 +37,7 @@ while true; do
         [Yy]* )
         	read -p "Clear all existing repos in $USER folder? YES=[ENTER] or NO=CTRL-C"
 			sudo rm -rf $USER_BEASLEY_DIR/*
+			sudo git clone https://github.com/beasley-weather/beasley-weather-station.git # need to redownload self becase I just rm'ed myself
 			sudo git clone https://github.com/beasley-weather/server.git
 			sudo git clone https://github.com/beasley-weather/bbg.git
 			sudo git clone https://github.com/beasley-weather/data-generator.git
