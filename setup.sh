@@ -30,13 +30,15 @@ fi
 
 # step 2
 echo -e "\nDownloading all necessary git repos for scripts and config files..."
-cd $USER_BEASLEY_DIR
+cd $USER_HOME_DIR
 while true; do
     read -p "Do you wish to reinstall git repos? [y/n]" yn
     case $yn in
         [Yy]* )
         	read -p "Clear all existing repos in $USER folder? YES=[ENTER] or NO=CTRL-C"
 			sudo rm -rf $USER_BEASLEY_DIR
+			mkdir -p $USER_BEASLEY_DIR
+			cd $USER_BEASLEY_DIR
 			sudo git clone https://github.com/beasley-weather/beasley-weather-station.git # need to redownload self becase I just rm'ed myself
 			sudo git clone https://github.com/beasley-weather/server.git
 			sudo git clone https://github.com/beasley-weather/bbg.git
