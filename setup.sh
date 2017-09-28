@@ -63,7 +63,7 @@ sudo sh -c 'echo "AllowUsers " $USER >> /etc/ssh/sshd_config'
 echo -e "\nCheck hardware architecture to see if I am running on a BeagleBoneGreen or server..."
 #if [ `arch` == "armhf" ]
 while true; do
-    read -p "Do you wish to setup the BeagleBone (b) or the Server (s)? [b/s]" bs
+    read -p "Do you wish to setup the BeagleBone (b) or the Server (s) or None(n)? [b/s/n]" bs
     case $bs in
         [Bb]* )
 			echo "Architecture is armhf, therefore this is a BEAGLE BONE GREEN/BLACK  and will be configured as such."
@@ -73,6 +73,8 @@ while true; do
 			echo "Architecture is not armhf, therefore this is a SERVER and will be configured as such."
 			$SERVER_SCRIPTS_DIR/$SERVER_SETUP_SCRIPT
 			break;;
-        * ) echo "Please answer (b) or (s).";;
+		[Nn]* ) 
+			break;;
+        * ) echo "Please answer (b) or (s) or (n).";;
     esac
 done
