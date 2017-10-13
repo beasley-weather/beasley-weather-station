@@ -18,34 +18,35 @@ set -e
 
 # step 1
 echo -e "\nCreating main user (badger) and file structure..."
-sudo mkdir -p $USER_BEASLEY_DIR
+mkdir -p $USER_BEASLEY_DIR
 if [ `id -u $USER` ]
 then
 	echo "User $USER already exists (this is good)"
 else
 	echo "If if prompts for password and Full name, make it \"$USER\" and press \"Enter\" for everything else."
-	sudo adduser --quiet $USER --home $USER_HOME_DIR
+	adduser --quiet $USER --home $USER_HOME_DIR
 	echo "Adding user $USER complete."
 fi
 
 # step 2
 echo -e "\nDownloading all necessary git repos for scripts and config files..."
 cd $USER_HOME_DIR
+
 while true; do
     read -p "Do you wish to reinstall git repos? [y/n]" yn
     case $yn in
         [Yy]* )
         	read -p "Clear all existing repos in $USER folder? YES=[ENTER] or NO=CTRL-C"
-			sudo rm -rf $USER_BEASLEY_DIR
-			sudo mkdir -p $USER_BEASLEY_DIR
+			rm -rf $USER_BEASLEY_DIR
+			mkdir -p $USER_BEASLEY_DIR
 			cd $USER_BEASLEY_DIR
-			sudo git clone https://github.com/beasley-weather/beasley-weather-station.git # need to redownload self becase I just rm'ed myself
-			sudo git clone https://github.com/beasley-weather/server.git
-			sudo git clone https://github.com/beasley-weather/bbg.git
-			sudo git clone https://github.com/beasley-weather/data-generator.git
-			sudo git clone https://github.com/beasley-weather/extract-data.git
-			sudo git clone https://github.com/beasley-weather/project-tracking.git
-			sudo git clone https://github.com/beasley-weather/libdb.git
+			git clone https://github.com/beasley-weather/beasley-weather-station.git # need to redownload self becase I just rm'ed myself
+			git clone https://github.com/beasley-weather/server.git
+			git clone https://github.com/beasley-weather/bbg.git
+			git clone https://github.com/beasley-weather/data-generator.git
+			git clone https://github.com/beasley-weather/extract-data.git
+			git clone https://github.com/beasley-weather/project-tracking.git
+			git clone https://github.com/beasley-weather/libdb.git
 			echo "Done downloading all beasley-weather-station repos." 
 			break;;
         [Nn]* ) break;;
@@ -54,11 +55,11 @@ while true; do
 done
 
 echo -e "\nRecursively change all file permissions to \"$USER\"..."
-sudo chown -R $USER:$USER $USER_HOME_DIR
+chown -R $USER:$USER $USER_HOME_DIR
 
 echo -e "\nMake sure user [" $USER "] is able to ssh into this system..."
 # https://askubuntu.com/questions/16650/create-a-new-ssh-user-on-ubuntu-server
-sudo sh -c 'echo "AllowUsers " $USER >> /etc/ssh/sshd_config'
+sh -c 'echo "AllowUsers " $USER >> /etc/ssh/sshd_config'
 
 echo -e "\nCheck hardware architecture to see if I am running on a BeagleBoneGreen or server..."
 #if [ `arch` == "armhf" ]
