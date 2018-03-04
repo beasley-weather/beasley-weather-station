@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+    dts-server:
+        image: dts_server
+        environment:
+            - DTS_PORT=24242
+            - WEEWX_DATABASE=/var/lib/weewx/weewx.sdb
+        volumes:
+            - beasley_server_weewx_sdb:/var/lib/weewx/
+        tty: false
+    weewx:
+        build: .
+        volumes:
+            - beasley_server_weewx_sdb:/var/lib/weewx/
+        tty: false
+
+volumes:
+    beasley_server_weewx_sdb:

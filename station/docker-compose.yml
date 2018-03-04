@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+    dts-client:
+        image: dts_client
+        environment:
+            - DTS_SERVER=$DTS_SERVER
+            - DTS_INTERVAL=600
+            - WEEWX_DATABASE=/var/lib/weewx/weewx.sdb
+        volumes:
+            - beasley_station_weewx_sdb:/var/lib/weewx/
+        tty: false
+    weewx:
+        build: .
+        volumes:
+            - beasley_station_weewx_sdb:/var/lib/weewx/
+        tty: false
+
+volumes:
+    beasley_station_weewx_sdb:
