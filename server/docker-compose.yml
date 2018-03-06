@@ -13,7 +13,16 @@ services:
         build: .
         volumes:
             - beasley_server_weewx_sdb:/var/lib/weewx/
+            - beasley_server_web_files:/var/www/html/weewx/
+        tty: false
+    nginx:
+        image: nginx
+        ports:
+            - "80:80"
+        volumes:
+            - beasley_server_web_files:/usr/share/nginx/html/
         tty: false
 
 volumes:
     beasley_server_weewx_sdb:
+    beasley_server_web_files:

@@ -10,11 +10,13 @@ services:
         volumes:
             - beasley_station_weewx_sdb:/var/lib/weewx/
         tty: false
+        restart: on-failure
     weewx:
         build: .
         volumes:
             - beasley_station_weewx_sdb:/var/lib/weewx/
         tty: false
+        restart: on-failure
 
 volumes:
     beasley_station_weewx_sdb:
