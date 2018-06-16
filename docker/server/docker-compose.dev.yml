@@ -1,0 +1,6 @@
+version: '3'
+
+services:
+    dts-server:
+        volumes:
+            - '../../transfer-system/:/root/'

@@ -32,11 +32,11 @@ def main():
         child.sendline(UNITS)
 
         child.expect('weather station type')
-        #  child.sendline(STATION_TYPE)
-        child.sendline('Simulator')
+        child.sendline(STATION_TYPE)
+        # child.sendline('Simulator')
 
-        #  child.expect('weather station model')
-        #  child.sendline(STATION_MODEL)
+        child.expect('weather station model')
+        child.sendline(STATION_MODEL)
 
         child.expect(EOF)
 

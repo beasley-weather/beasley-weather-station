@@ -1,0 +1,27 @@
+version: '3'
+
+volumes:
+    beasley_station_weewx_sdb:
+
+services:
+    weewx:
+        image: client_weewx
+        privileged: true
+        restart: on-failure
+        tty: true
+        volumes:
+            - beasley_station_weewx_sdb:/var/lib/weewx/
+            # - "./:/var/lib/weewx/"
+            # NOTE: When running in privileged mode, this is not required
+            # - "/dev/bus/usb:/dev/bus/usb"
+
+    dts-client:
+        image: client_transfer_client
+        restart: on-failure
+        tty: true
+        environment:
+            - DTS_SERVER=$DTS_SERVER
+            - DTS_INTERVAL=60
+            - WEEWX_DATABASE=/var/lib/weewx/weewx.sdb
+        volumes:
+            - beasley_station_weewx_sdb:/var/lib/weewx/
