@@ -44,9 +44,9 @@ class WeewxDB:
             table = self.tables.archive
 
             try:
-                results = session.query(table)\
-                    .filter(table.dateTime >= _from)\
-                    .filter(table.dateTime < to)\
+                results = session.query(table) \
+                    .filter(table.dateTime >= _from) \
+                    .filter(table.dateTime < to) \
                     .all()
 
                 return [self.archive_schema.dump(entry).data for entry in results]
@@ -64,31 +64,39 @@ class WeewxDB:
         with self.session as session:
             data = [self.tables.archive(**entry) for entry in data_dump]
 
+            def itemNotInDateTimes(item, dateTimes):
+                return item.dateTime not in dateTimes
+
             try:
                 session.add_all(data)
                 session.commit()
 
-            except IntegrityError:
+            except IntegrityError as exc:
                 session.rollback()
-                print_exc()
-                #  raise IOError(exc)
-                #  session.rollback()
-                #
-                #  table = self.tables.archive
-                #  dateTimes = map(lambda item: item.dateTime, data)
-                #  dupes = session.query(table)\
-                #      .filter(table.dateTime in dateTimes)\
-                #      .all()
-                #  dupeDateTimes = map(lambda item: item.dateTime, dupes)
-                #  print('Duplicate date times', list(dupeDateTimes))
-                #  newData = filter(lambda item: item.dateTime not in dupeDateTimes, data)
-                #  session.add_all(data)
-                #  session.commit()
+
+                table = self.tables.archive
+                dateTimes = list(map(lambda item: item.dateTime, data))
+                dupes = session.query(table) \
+                    .filter(table.dateTime.in_(dateTimes)) \
+                    .all()
+                dupeDateTimes = list(map(lambda item: item.dateTime, dupes))
+                newData = list(
+                    filter(lambda item: item.dateTime not in list(dupeDateTimes),
+                           data)
+                )
+
+                print('Failed to insert. Unique constraint failed while trying to '
+                      + 'insert rows with dateTimes {}'.format(dateTimes))
+                print('Duplicate row dateTimes {}'.format(dupeDateTimes))
+                print('Only inserting unique rows with dateTimes {}'
+                      .format(list(map(lambda item: item.dateTime, newData))))
+
+                session.add_all(newData)
+                session.commit()
 
             except SQLAlchemyError as exc:
                 session.rollback()
-                print_exc()
-                #  raise IOError(exc)
+                raise IOError(exc)
 
     def _init_database(self):
         with self._engine.connect() as con:

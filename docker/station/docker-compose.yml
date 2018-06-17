@@ -21,7 +21,7 @@ services:
         tty: true
         environment:
             - DTS_SERVER=$DTS_SERVER
-            - DTS_INTERVAL=60
+            - DTS_INTERVAL=$DTS_INTERVAL
             - WEEWX_DATABASE=/var/lib/weewx/weewx.sdb
         volumes:
             - beasley_station_weewx_sdb:/var/lib/weewx/
