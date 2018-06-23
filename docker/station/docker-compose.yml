@@ -16,7 +16,7 @@ services:
             # - "/dev/bus/usb:/dev/bus/usb"
 
     dts-client:
-        image: beasleyweatherstation/transfer-system:1
+        image: beasleyweatherstation/transfer-client:1
         restart: on-failure
         tty: true
         environment:
