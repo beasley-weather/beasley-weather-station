@@ -3,6 +3,7 @@ version: '3'
 services:
     dts-server:
         image: server_weewx
+        restart: on-failure
         environment:
             - DTS_PORT=24242
             - WEEWX_DATABASE=/var/lib/weewx/weewx.sdb
@@ -22,6 +23,7 @@ services:
 
     nginx:
         image: nginx
+        restart: on-failure
         ports:
             - "80:80"
         volumes:
