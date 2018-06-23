@@ -5,7 +5,7 @@ volumes:
 
 services:
     weewx:
-        image: beasleyweatherstation/station
+      image: beasleyweatherstation/station:1
         privileged: true
         restart: on-failure
         tty: true
@@ -16,7 +16,7 @@ services:
             # - "/dev/bus/usb:/dev/bus/usb"
 
     dts-client:
-        image: beasleyweatherstation/transfer-system
+        image: beasleyweatherstation/transfer-system:1
         restart: on-failure
         tty: true
         environment:
