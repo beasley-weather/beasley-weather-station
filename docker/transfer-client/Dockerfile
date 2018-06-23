@@ -18,10 +18,5 @@ RUN pipenv install --system --skip-lock
 RUN pip install -r requirements-client.txt
 
 
-# Cleanup
-# UNCOMMENT BEFORE PROD
-# RUN apt-get -y purge curl git wget && apt-get -y autoclean && apt-get -y autoremove
-
-
 USER badger
 ENTRYPOINT ["make", "run.client"]

@@ -1,7 +1,3 @@
-# TODO
-# - Ensure dts-client is restarted if it crashes or container restarts
-# - Ensure container starts at boot
-
 FROM beasley_weather_base:latest
 
 
@@ -33,7 +29,7 @@ COPY ./docker/weewx.empty.sdb /var/lib/weewx/weewx.sdb
 
 
 # Clean up
-# RUN pip uninstall -y pexpect
+RUN pip uninstall -y pexpect
 
 
 ENTRYPOINT ["make", "run.server"]

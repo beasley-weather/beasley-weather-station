@@ -16,8 +16,7 @@ COPY ./docker/weewx.conf /etc/weewx/
 
 
 # Clean up
-# RUN apt -y purge wget python3
-# RUN pip uninstall -y pexpect
+RUN pip uninstall -y pexpect
 
 
 ENTRYPOINT ["weewxd", "/etc/weewx/weewx.conf"]

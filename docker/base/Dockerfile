@@ -1,14 +1,6 @@
 FROM ubuntu:xenial
 
 
-ARG PASS="pass"
-ENV USER="badger"
-
-
-# RUN useradd -m $USER
-# RUN echo $USER:$PASS | chpasswd
-
-
 # Install packages
 RUN apt-get update && \
     apt-get -y install \

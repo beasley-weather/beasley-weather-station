@@ -1,7 +1,7 @@
-DOCKER_BASE_IMAGE_TAG := beasley_weather_base
-DOCKER_SERVER_IMAGE_TAG := server_weewx
-DOCKER_CLIENT_IMAGE_TAG := client_weewx
-DOCKER_TRANSFER_CLIENT_TAG := client_transfer_client
+DOCKER_BASE_IMAGE_TAG := beasleyweatherstation/base
+DOCKER_SERVER_IMAGE_TAG := beasleyweatherstation/server
+DOCKER_CLIENT_IMAGE_TAG := beasleyweatherstation/station
+DOCKER_TRANSFER_CLIENT_TAG := beasleyweatherstation/transfer-client
 
 down.server:
 	cd docker/server && docker-compose down
