@@ -2,7 +2,7 @@ version: '3'
 
 services:
     dts-server:
-        image: server_weewx
+        image: beasleyweatherstation/server
         restart: on-failure
         environment:
             - DTS_PORT=24242
